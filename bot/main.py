@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 import asyncio
-from handlers.handlers import r
+from bot.handlers.handlers import r
 import os
 import logging 
 
@@ -15,13 +15,11 @@ logging.basicConfig(
 from utils.db import db
 
 load_dotenv()
-
+TOKEN = os.getenv("BOT")
 
 async def main():
-    TOKEN = os.getenv("BOT")
     bot = Bot(token=TOKEN)
     dp = Dispatcher()
-    # loading db
     await db.setup()
     await bot.delete_webhook(drop_pending_updates=True)
     dp.include_router(r)
